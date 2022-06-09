@@ -10,7 +10,7 @@ patient = APIRouter()
 
 @patient.post("/patient/", tags=["Patient"])
 async def insert_patient(patient: Patient):
-    conn.patientdb.patient.insert_one(dict(Patient))
+    conn.patientdb.patient.insert_one(dict(patient))
     return serializeList(conn.patientdb.patient.find())
 
 
@@ -27,7 +27,7 @@ async def get_one_patient(id):
 @patient.put("/patient/{id}", tags=["Patient"])
 async def update_patient(id, patient: Patient):
     conn.patientdb.patient.find_one_and_update(
-        {"_id": ObjectId(id)}, {"$set": dict(Patient)}
+        {"_id": ObjectId(id)}, {"$set": dict(patient)}
     )
     return serializeDict(conn.patientdb.patient.find_one({"_id": ObjectId(id)}))
 
